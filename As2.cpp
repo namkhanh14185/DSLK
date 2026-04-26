@@ -17,8 +17,9 @@ void Init(List &l)
     l.first = l.last = NULL; 
 }
 
-Node* CreateNode(int x) {
-    Node *p = new Node;
+Node*CreateNode(int x) 
+{
+    Node*p=new Node;
     if (!p) return NULL;
     p->data = x;
     p->link = NULL;
@@ -51,11 +52,15 @@ void NhapDuLieu(int &n, int &m) {
 }
 void Josephus(int n, int m) 
 {
-    List l; Init(l);
+    List l; 
+    Init(l);
     for (int i = 1; i <= n; i++) AddLast(l, CreateNode(i));
     Node* p = l.first;
     Node* prev = l.last;
-    cout << "\nThu tu cac nguoi bi loai: ";
+    cout<<"\n--- KET QUA LOAI ---" << endl;
+    cout<<"Buoc\tNguoi bi loai" << endl;
+
+    int dem=0;
     while(p->link != p) 
     { 
         for(int i = 0; i < m; i++) 
@@ -63,20 +68,23 @@ void Josephus(int n, int m)
             prev = p;
             p = p->link;
         }
-        cout << p->data << " ";
-        prev->link = p->link;
+        dem++;
+        cout<<dem<<"\tNguoi so "<<p->data<< endl;
+        prev->link=p->link;
         delete p;
-        p = prev->link;
+        p=prev->link;
     }
-    cout<<"\n=> NGUOI CHIEN THANG: "<<p->data<< endl;
+    cout<<"--------------------"<< endl;
+    cout<<"\n=> NGUOI CHIEN THANG: "<<p->data << endl;
     delete p;
 }
 
-int main() {
+int main() 
+{
     int n, m;
     NhapDuLieu(n, m);
     Josephus(n, m);
-    cout << "\nNhan Enter de ket thuc...";
+    cout<<"\nNhan Enter de ket thuc...";
     cin.ignore(); 
     cin.get();
     return 0;
