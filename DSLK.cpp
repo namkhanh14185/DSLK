@@ -128,6 +128,7 @@ int main()
     ChenGiuThuTu(l, CreateNode(svMoi));
     cout<< "\nSau khi chen:"; 
     In(l);
+    
     TimTrungNgaySinh(l);
     cout<<"\nNhan Enter de thoat...";
     cin.ignore(); 
