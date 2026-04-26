@@ -68,7 +68,7 @@ void Josephus(int n, int m)
         delete p;
         p = prev->link;
     }
-    cout << "\n=> NGUOI CHIEN THANG: " << p->data << endl;
+    cout<<"\n=> NGUOI CHIEN THANG: "<<p->data<< endl;
     delete p;
 }
 
@@ -77,6 +77,7 @@ int main() {
     NhapDuLieu(n, m);
     Josephus(n, m);
     cout << "\nNhan Enter de ket thuc...";
-    cin.ignore(); cin.get();
+    cin.ignore(); 
+    cin.get();
     return 0;
 }
