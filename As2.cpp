@@ -40,6 +40,7 @@ void AddLast(List &l, Node *p)
     }
     l.last->link=l.first;
 }
+
 void NhapDuLieu(int &n, int &m) 
 {
     do {
@@ -54,7 +55,8 @@ void NhapDuLieu(int &n, int &m)
         if (m < 0) cout << "Loi: M khong duoc am!\n";
     } while (m < 0);
 }
-void Josephus(int n, int m) 
+
+void Josephus(int n, int m, int chon) 
 {
     List l; Init(l);
     for (int i = 1; i <= n; i++) 
@@ -63,13 +65,14 @@ void Josephus(int n, int m)
     }
     Node*p=l.first;
     Node*prev=l.last;
-    if (n <= 100) 
+
+    if (chon == 1) 
     {
-        cout << "\nThu tu cac nguoi bi loai: ";
+        cout<< "\nThu tu cac nguoi bi loai: ";
     }
     else 
     {
-        cout << "\nDang tinh toan cho N = " << n << ". Vui long doi trong giay lat..." << endl;
+        cout<< "\nDang tinh toan cho du lieu lon (N = " << n << ")..." << endl;
     }
 
     while(p->link != p) 
@@ -79,7 +82,7 @@ void Josephus(int n, int m)
             prev = p;
             p = p->link;
         }
-        if (n <= 100) cout << p->data << " ";
+        if (chon == 1) cout << p->data << " ";
         
         prev->link = p->link;
         delete p;
@@ -91,9 +94,16 @@ void Josephus(int n, int m)
 }
 
 int main() {
-    int n, m;
+    int n, m, chon;
+    cout<< "--- CHUONG TRINH JOSEPHUS LAN 5 ---" << endl;
+    cout<< "1. Xem chi tiet (Nho)" << endl;
+    cout<< "2. Chay nhanh (Du lieu lon)" << endl;
+    cout<< "Chon che do: "; 
+    cin>> chon;
+
     NhapDuLieu(n, m);
-    Josephus(n, m);
+    Josephus(n, m, chon);
+    
     cout << "\nNhan Enter de ket thuc...";
     cin.ignore(); 
     cin.get();
