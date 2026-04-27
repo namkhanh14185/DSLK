@@ -1,111 +1,92 @@
-#include <iostream>
+#include<iostream>
+#include<ctime>
 using namespace std;
 struct Node 
 {
     int data;
-    Node*link;
+    Node* link;
 };
 
 struct List 
 {
-    Node*first;
-    Node*last;
+    Node* first;
+    Node* last;
 };
 
 void Init(List &l) 
-{ 
-    l.first = l.last = NULL; 
+{
+    l.first = l.last = NULL;
 }
 
-Node*CreateNode(int x) 
+Node* CreateNode(int x) 
 {
-    Node*p=new Node;
-    if (!p) return NULL;
-    p->data = x;
-    p->link = NULL;
+    Node* p = new Node;
+    if(!p) return NULL;
+    p->data= x;
+    p->link= NULL;
     return p;
 }
 
-void AddLast(List &l, Node *p) 
+void AddLast(List &l, Node*p) 
 {
-    if (!p) return;
-    if (!l.first) 
+    if(!p) return;
+    if(!l.first) 
     {
         l.first = l.last = p;
     } 
     else 
     {
-        l.last->link=p;
-        l.last=p;
+        l.last->link = p;
+        l.last = p;
     }
-    l.last->link=l.first;
+    l.last->link = l.first;
 }
 
-void NhapDuLieu(int &n, int &m) 
+void Josephus(int n, int m) 
 {
-    do {
-        cout << "Nhap so nguoi choi (N > 0): ";
-        cin >> n;
-        if (n <= 0) cout << "Loi: N phai lon hon 0!\n";
-    } while (n <= 0);
+    clock_t start = clock();
 
-    do {
-        cout << "Nhap buoc nhay (M >= 0): ";
-        cin >> m;
-        if (m < 0) cout << "Loi: M khong duoc am!\n";
-    } while (m < 0);
-}
-
-void Josephus(int n, int m, int chon) 
-{
-    List l; Init(l);
-    for (int i = 1; i <= n; i++) 
-    {
+    List l; 
+    Init(l);
+    for (int i = 1; i <= n; i++) {
         AddLast(l, CreateNode(i));
     }
-    Node*p=l.first;
-    Node*prev=l.last;
 
-    if (chon == 1) 
-    {
-        cout<< "\nThu tu cac nguoi bi loai: ";
-    }
-    else 
-    {
-        cout<< "\nDang tinh toan cho du lieu lon (N = " << n << ")..." << endl;
-    }
+    Node* p = l.first;
+    Node* prev = l.last;
+    if (n <= 100) cout<<"Thu tu bi loai: ";
 
-    while(p->link != p) 
-    { 
-        for(int i = 0; i < m; i++) 
+    while (p->link != p) 
+    {
+        for (int i = 0; i < m; i++) 
         {
             prev = p;
             p = p->link;
         }
-        if (chon == 1) cout << p->data << " ";
+        if (n <= 100) cout<<p->data<<" ";
         
         prev->link = p->link;
         delete p;
         p = prev->link;
     }
+    clock_t end = clock();
+    double duration = (double)(end - start);
+
+    cout << "\n=> NGUOI CHIEN THANG: " << p->data << endl;
+    cout << "==> Thoi gian chay (N=" << n << "): " << duration << " giay" << endl;
     
-    cout << "\n=> NGUOI CHIEN THANG CUOI CUNG: " << p->data << endl;
     delete p;
 }
 
 int main() {
-    int n, m, chon;
-    cout<< "--- CHUONG TRINH JOSEPHUS LAN 5 ---" << endl;
-    cout<< "1. Xem chi tiet (Nho)" << endl;
-    cout<< "2. Chay nhanh (Du lieu lon)" << endl;
-    cout<< "Chon che do: "; 
-    cin>> chon;
-
-    NhapDuLieu(n, m);
-    Josephus(n, m, chon);
-    
-    cout << "\nNhan Enter de ket thuc...";
-    cin.ignore(); 
+    int n, m;
+    cout<<"Nhap N (so nguoi): "; 
+    cin>>n;
+    cout<<"Nhap M (buoc nhay): "; 
+    cin>>m;
+    Josephus(n, m);
+    cout<<"\nNhan Enter de thoat...";
+    cin.ignore();
     cin.get();
     return 0;
 }
