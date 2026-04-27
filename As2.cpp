@@ -88,5 +88,6 @@ int main() {
     cout<<"\nNhan Enter de thoat...";
     cin.ignore();
     cin.get();
+    
     return 0;
 }
