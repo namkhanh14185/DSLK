@@ -33,6 +33,20 @@ void duyetHauTo(PNode P) {
     }
 }
 
+void duyetTrungTo(PNode P) {
+    if (P != NULL) {
+        if (P->left != NULL && P->right != NULL) {
+            cout << "( ";
+        }
+        duyetTrungTo(P->left);
+        cout << P->info << " ";
+        duyetTrungTo(P->right);
+        if (P->left != NULL && P->right != NULL) {
+            cout << ") ";
+        }
+    }
+}
+
 int main() {
     PNode root = taoNut("-");
     
@@ -66,6 +80,8 @@ int main() {
     duyetTienTo(root);
     cout << "\nKy phap Hau to: ";
     duyetHauTo(root);
+    cout << "\nKy phap Trung to: ";
+    duyetTrungTo(root);
     cout << endl;
     
     return 0;
