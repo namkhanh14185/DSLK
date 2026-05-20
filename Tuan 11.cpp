@@ -19,6 +19,14 @@ PNode taoNut(string x) {
 
 int main() {
     PNode root = taoNut("-");
+    PNode chia = taoNut("/");
+    PNode mu = taoNut("^");
+    
+    root->left = chia;
+    root->right = mu;
+    
     cout << "Nut goc: " << root->info << endl;
+    cout << "Con trai: " << root->left->info << " , Con phai: " << root->right->info << endl;
+    
     return 0;
 }
