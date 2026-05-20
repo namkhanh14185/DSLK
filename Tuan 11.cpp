@@ -2,14 +2,16 @@
 #include <string>
 using namespace std;
 
-struct Node {
+struct Node 
+{
     string info;
     Node* left;
     Node* right;
 };
 typedef Node* PNode;
 
-PNode taoNut(string x) {
+PNode taoNut(string x) 
+{
     PNode p = new Node;
     p->info = x;
     p->left = NULL;
@@ -17,24 +19,123 @@ PNode taoNut(string x) {
     return p;
 }
 
-void duyetTienTo(PNode P) {
-    if (P != NULL) {
+bool laToanTu(char c) 
+{
+    return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
+}
+
+int doUuTien(char c) 
+{
+    if (c == '^') return 3;
+    if (c == '*' || c == '/') return 2;
+    if (c == '+' || c == '-') return 1;
+    return 0;
+}
+
+string chuyenTrungToSangHauTo(string trungTo) 
+{
+    string hauTo = "";
+    char stack[100];
+    int top = -1;
+
+    for (int i = 0; i < trungTo.length(); i++) 
+    {
+        char c = trungTo[i];
+        if (c == ' ') continue;
+
+        if (!laToanTu(c) && c != '(' && c != ')') 
+        {
+            hauTo += c;
+        } 
+        else if (c == '(') 
+        {
+            top++;
+            stack[top] = c;
+        } 
+        else if (c == ')') 
+        {
+            while (top != -1 && stack[top] != '(') 
+            {
+                hauTo += stack[top];
+                top--;
+            }
+            if (top != -1) top--;
+        } 
+        else if (laToanTu(c)) 
+        {
+            while (top != -1 && doUuTien(stack[top]) >= doUuTien(c)) 
+            {
+                hauTo += stack[top];
+                top--;
+            }
+            top++;
+            stack[top] = c;
+        }
+    }
+
+    while (top != -1) 
+    {
+        hauTo += stack[top];
+        top--;
+    }
+    return hauTo;
+}
+
+PNode dungCayTuHauTo(string hauTo) 
+{
+    PNode stack[100];
+    int top = -1;
+    
+    for (int i = 0; i < hauTo.length(); i++) 
+    {
+        string s = "";
+        s += hauTo[i];
+        PNode t = taoNut(s);
+        
+        if (!laToanTu(hauTo[i])) 
+        {
+            top++;
+            stack[top] = t;
+        } 
+        else 
+        {
+            t->right = stack[top];
+            top--;
+            
+            t->left = stack[top];
+            top--;
+            
+            top++;
+            stack[top] = t;
+        }
+    }
+    return stack[top];
+}
+
+void duyetTienTo(PNode P) 
+{
+    if (P != NULL) 
+    {
         cout << P->info << " ";
         duyetTienTo(P->left);
         duyetTienTo(P->right);
     }
 }
 
-void duyetHauTo(PNode P) {
-    if (P != NULL) {
+void duyetHauTo(PNode P) 
+{
+    if (P != NULL) 
+    {
         duyetHauTo(P->left);
         duyetHauTo(P->right);
         cout << P->info << " ";
     }
 }
 
-void duyetTrungTo(PNode P) {
-    if (P != NULL) {
+void duyetTrungTo(PNode P) 
+{
+    if (P != NULL) 
+    {
         if (P->left != NULL && P->right != NULL) cout << "( ";
         duyetTrungTo(P->left);
         cout << P->info << " ";
@@ -43,44 +144,26 @@ void duyetTrungTo(PNode P) {
     }
 }
 
-int demSoNut(PNode P) {
+int demSoNut(PNode P) 
+{
     if (P == NULL) return 0;
     return 1 + demSoNut(P->left) + demSoNut(P->right);
 }
 
-int main() {
-    PNode root = taoNut("-");
+int main() 
+{
+    string trungTo;
+    cout << "Nhap bieu thuc: ";
+    getline(cin, trungTo); 
     
-    PNode chia = taoNut("/");
-    PNode cong = taoNut("+");
-    PNode nhan1 = taoNut("*");
-    PNode a = taoNut("a");
-    PNode b = taoNut("b");
-    PNode c = taoNut("c");
-    PNode d = taoNut("d");
+    string hauTo = chuyenTrungToSangHauTo(trungTo);
+    PNode root = dungCayTuHauTo(hauTo);
     
-    root->left = chia;
-    chia->left = cong; chia->right = d;
-    cong->left = nhan1; cong->right = c;
-    nhan1->left = a; nhan1->right = b;
-    
-    PNode mu = taoNut("^");
-    PNode tru = taoNut("-");
-    PNode nhan2 = taoNut("*");
-    PNode e = taoNut("e");
-    PNode f = taoNut("f");
-    PNode h = taoNut("h");
-    PNode g = taoNut("g");
-    
-    root->right = mu;
-    mu->left = tru; mu->right = g;
-    tru->left = nhan2; tru->right = h;
-    nhan2->left = e; nhan2->right = f;
-    
-    cout << "Tien to: ";
+    cout << "\nDUYET CAY" << endl;
+    cout << "Tien to : ";
     duyetTienTo(root);
     
-    cout << "\nHau to: ";
+    cout << "\nHau to  : ";
     duyetHauTo(root);
     
     cout << "\nTrung to: ";
