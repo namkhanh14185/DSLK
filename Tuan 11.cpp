@@ -17,6 +17,22 @@ PNode taoNut(string x) {
     return p;
 }
 
+void duyetTienTo(PNode P) {
+    if (P != NULL) {
+        cout << P->info << " ";
+        duyetTienTo(P->left);
+        duyetTienTo(P->right);
+    }
+}
+
+void duyetHauTo(PNode P) {
+    if (P != NULL) {
+        duyetHauTo(P->left);
+        duyetHauTo(P->right);
+        cout << P->info << " ";
+    }
+}
+
 int main() {
     PNode root = taoNut("-");
     
@@ -46,7 +62,11 @@ int main() {
     tru->left = nhan2; tru->right = h;
     nhan2->left = e; nhan2->right = f;
     
-    cout << "Cay bieu thuc da duoc dung xong." << endl;
+    cout << "Ky phap Tien to: ";
+    duyetTienTo(root);
+    cout << "\nKy phap Hau to: ";
+    duyetHauTo(root);
+    cout << endl;
     
     return 0;
 }
