@@ -35,16 +35,17 @@ void duyetHauTo(PNode P) {
 
 void duyetTrungTo(PNode P) {
     if (P != NULL) {
-        if (P->left != NULL && P->right != NULL) {
-            cout << "( ";
-        }
+        if (P->left != NULL && P->right != NULL) cout << "( ";
         duyetTrungTo(P->left);
         cout << P->info << " ";
         duyetTrungTo(P->right);
-        if (P->left != NULL && P->right != NULL) {
-            cout << ") ";
-        }
+        if (P->left != NULL && P->right != NULL) cout << ") ";
     }
+}
+
+int demSoNut(PNode P) {
+    if (P == NULL) return 0;
+    return 1 + demSoNut(P->left) + demSoNut(P->right);
 }
 
 int main() {
@@ -76,12 +77,16 @@ int main() {
     tru->left = nhan2; tru->right = h;
     nhan2->left = e; nhan2->right = f;
     
-    cout << "Ky phap Tien to: ";
+    cout << "Tien to: ";
     duyetTienTo(root);
-    cout << "\nKy phap Hau to: ";
+    
+    cout << "\nHau to: ";
     duyetHauTo(root);
-    cout << "\nKy phap Trung to: ";
+    
+    cout << "\nTrung to: ";
     duyetTrungTo(root);
+    
+    cout << "\nTong so nut: " << demSoNut(root);
     cout << endl;
     
     return 0;
