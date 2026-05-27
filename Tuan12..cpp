@@ -6,40 +6,29 @@ void inMang(int a[], int n) {
     cout << endl;
 }
 
-void vundong(int a[], int n, int i) {
+void vundongSuaLoi(int a[], int n, int size, int i) {
     int max = i;
     int left = 2 * i;
     int right = 2 * i + 1;
-    if(left <= n && a[left] > a[max]) max = left;
-    if(right <= n && a[right] > a[max]) max = right;
+    if(left <= size && a[left] > a[max]) max = left;
+    if(right <= size && a[right] > a[max]) max = right;
     if(max != i) {
         int temp = a[i];
         a[i] = a[max];
         a[max] = temp;
         cout << "Trang thai sau khi doi: ";
-        inMang(a, n);
-        vundong(a, n, max);
+        inMang(a, n); 
+        vundongSuaLoi(a, n, size, max);
     }
 }
 
 void heapSort(int a[], int n) {
-    cout << "\nCac buoc tao max heap\n";
-    for(int i = n / 2; i >= 1; i--) {
-        cout << "\nVun dong tai node " << i << endl;
-        vundong(a, n, i);
-        cout << "Trang thai hien tai: ";
-        inMang(a, n);
-    }
-    cout << "\nCac buoc sap xep\n";
+    for(int i = n / 2; i >= 1; i--) vundongSuaLoi(a, n, n, i);
     for(int i = n; i >= 2; i--) {
         int temp = a[1];
         a[1] = a[i];
         a[i] = temp;
-        cout << "\nDoi root voi phan tu cuoi:\n";
-        inMang(a, n);
-        vundong(a, i - 1, 1);
-        cout << "Trang thai sau khi vun lai:\n";
-        inMang(a, n);
+        vundongSuaLoi(a, n, i - 1, 1);
     }
 }
 
