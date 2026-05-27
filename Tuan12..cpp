@@ -1,43 +1,51 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void printArray(const vector<int>& arr) {
-    for (int num : arr) cout << num << " ";
+void inMang(int a[], int n) {
+    for(int i = 1; i <= n; i++) cout << a[i] << " ";
     cout << endl;
 }
 
-void heapify(vector<int>& arr, int n, int i, int& step) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-    if (left < n && arr[left] > arr[largest]) largest = left;
-    if (right < n && arr[right] > arr[largest]) largest = right;
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        cout << "   -> Buoc nho " << step++ << ": ";
-        printArray(arr);
-        heapify(arr, n, largest, step);
+void vundong(int a[], int n, int i) {
+    int max = i;
+    int left = 2 * i;
+    int right = 2 * i + 1;
+    if(left <= n && a[left] > a[max]) max = left;
+    if(right <= n && a[right] > a[max]) max = right;
+    if(max != i) {
+        int temp = a[i];
+        a[i] = a[max];
+        a[max] = temp;
+        cout << "Trang thai sau khi doi: ";
+        inMang(a, n);
+        vundong(a, n, max);
     }
 }
 
-void heapSort(vector<int>& arr) {
-    int n = arr.size();
-    cout << "--- XAY DUNG MAX-HEAP ---\n";
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        int subStep = 1;
-        heapify(arr, n, i, subStep);
+void heapSort(int a[], int n) {
+    cout << "\nCac buoc tao max heap\n";
+    for(int i = n / 2; i >= 1; i--) {
+        cout << "\nVun dong tai node " << i << endl;
+        vundong(a, n, i);
+        cout << "Trang thai hien tai: ";
+        inMang(a, n);
     }
-    cout << "--- SAP XEP ---\n";
-    for (int i = n - 1; i > 0; i--) {
-        swap(arr[0], arr[i]);
-        int subStep = 1;
-        heapify(arr, i, 0, subStep);
+    cout << "\nCac buoc sap xep\n";
+    for(int i = n; i >= 2; i--) {
+        int temp = a[1];
+        a[1] = a[i];
+        a[i] = temp;
+        cout << "\nDoi root voi phan tu cuoi:\n";
+        inMang(a, n);
+        vundong(a, i - 1, 1);
+        cout << "Trang thai sau khi vun lai:\n";
+        inMang(a, n);
     }
 }
 
 int main() {
-    vector<int> arr = {4, 10, 3, 5, 1};
-    heapSort(arr);
+    int a[] = {0, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+    int n1 = 10;
+    heapSort(a, n1);
     return 0;
 }
