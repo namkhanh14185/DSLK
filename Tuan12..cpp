@@ -10,18 +10,18 @@ void inmang(int a[], int n)
     cout << endl;
 }
 
-void vundong(int a[], int n, int size, int i)
+void vundong(int a[], int n, int i)
 {
     int maxidx = i;
     int trai = 2 * i;
     int phai = 2 * i + 1;
 
-    if(trai <= size && a[trai] > a[maxidx])
+    if(trai <= n && a[trai] > a[maxidx])
     {
         maxidx = trai;
     }
 
-    if(phai <= size && a[phai] > a[maxidx])
+    if(phai <= n && a[phai] > a[maxidx])
     {
         maxidx = phai;
     }
@@ -35,7 +35,7 @@ void vundong(int a[], int n, int size, int i)
         cout << "trang thai sau khi doi: ";
         inmang(a, n);
 
-        vundong(a, n, size, maxidx);
+        vundong(a, n, maxidx);
     }
 }
 
@@ -46,7 +46,7 @@ void sapxepvundong(int a[], int n)
     {
         cout << "\nvun dong tai node " << i << endl;
 
-        vundong(a, n, n, i);
+        vundong(a, n, i);
 
         cout << "trang thai hien tai: ";
         inmang(a, n);
@@ -65,7 +65,7 @@ void sapxepvundong(int a[], int n)
         cout << "\ndoi root voi phan tu cuoi:\n";
         inmang(a, n);
 
-        vundong(a, n, i - 1, 1);
+        vundong(a, i - 1, 1);
 
         cout << "trang thai sau khi vun lai:\n";
         inmang(a, n);
@@ -74,24 +74,29 @@ void sapxepvundong(int a[], int n)
 
 int main()
 {
-    int n;
-    cout << "nhap so phan tu n: ";
-    cin >> n;
+    int mang1[] = {0, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+    int n1 = 10;
 
-    int mang[100];
-    cout << "nhap cac phan tu cua mang:\n";
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> mang[i];
-    }
+    cout << "\ncay 1\n";
+    cout << "trang thai ban dau:\n";
+    inmang(mang1, n1);
 
-    cout << "\ntrang thai ban dau:\n";
-    inmang(mang, n);
-
-    sapxepvundong(mang, n);
+    sapxepvundong(mang1, n1);
 
     cout << "\nket qua cuoi:\n";
-    inmang(mang, n);
+    inmang(mang1, n1);
 
+    int mang2[] = {0, 11, 54, 32, 106, 38, 78, 203, 16, 84, 17, 39, 15};
+    int n2 = 12;
+
+    cout << "\n-------------------------------------\n";
+    cout << "\ncay 2\n";
+    cout << "trang thai ban dau:\n";
+    inmang(mang2, n2);
+
+    sapxepvundong(mang2, n2);
+    
+    cout << "\nket qua cuoi:\n";
+    inmang(mang2, n2);
     return 0;
 }
